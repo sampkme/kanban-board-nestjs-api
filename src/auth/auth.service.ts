@@ -10,6 +10,18 @@ import { IUsersRepository } from '../common/repositories';
 import { User } from '../common/interfaces';
 import { SignupDto } from './auth.dto';
 
+const AVATAR_COLORS = [
+  '#4186f4', '#e74c3c', '#2ecc71', '#9b59b6', '#f39c12',
+  '#1abc9c', '#e67e22', '#e91e63', '#009688', '#ff5722',
+  '#607d8b', '#795548', '#673ab7', '#00bcd4', '#8bc34a',
+];
+
+function pickAvatarColor(allUsers: User[]): string {
+  const usedColors = new Set(allUsers.map((u) => u.avatarColor));
+  const available = AVATAR_COLORS.find((c) => !usedColors.has(c));
+  return available ?? AVATAR_COLORS[allUsers.length % AVATAR_COLORS.length];
+}
+
 @Injectable()
 export class AuthService {
   constructor(
@@ -23,12 +35,14 @@ export class AuthService {
 
     const hashed = await bcrypt.hash(dto.password, 10);
     const now = new Date().toISOString();
+    const allUsers = await this.usersRepo.findAll();
     const user: User = {
       id: randomUUID(),
       email: dto.email,
       firstName: dto.firstName,
       lastName: dto.lastName,
       passwordHash: hashed,
+      avatarColor: pickAvatarColor(allUsers),
       createdAt: now,
       updatedAt: now,
     };

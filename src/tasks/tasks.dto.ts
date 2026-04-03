@@ -83,6 +83,11 @@ export class UpdateTaskDto {
   @Min(0)
   @IsOptional()
   storyPoints?: number;
+
+  @ApiPropertyOptional({ enum: TaskStatus })
+  @IsEnum(TaskStatus)
+  @IsOptional()
+  status?: TaskStatus;
 }
 
 export class UpdateTaskStatusDto {

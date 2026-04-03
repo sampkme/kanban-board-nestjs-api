@@ -80,6 +80,7 @@ export class TasksService {
       ...(dto.dueDate !== undefined && { dueDate: dto.dueDate }),
       ...(dto.epicId !== undefined && { epicId: dto.epicId }),
       ...(dto.storyPoints !== undefined && { storyPoints: dto.storyPoints }),
+      ...(dto.status !== undefined && { status: dto.status }),
       updatedAt: new Date().toISOString(),
     };
     return this.tasksRepo.save(updated);

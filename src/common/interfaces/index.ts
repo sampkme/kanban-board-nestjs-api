@@ -1,6 +1,7 @@
 export enum TaskStatus {
   TODO = 'TODO',
   IN_PROGRESS = 'IN_PROGRESS',
+  WAITING_FOR_ACCEPTANCE = 'WAITING_FOR_ACCEPTANCE',
   DONE = 'DONE',
 }
 
@@ -16,6 +17,7 @@ export interface User {
   passwordHash: string;
   firstName: string;
   lastName: string;
+  avatarColor: string;
   createdAt: string;
   updatedAt: string;
 }
